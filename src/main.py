@@ -203,6 +203,15 @@ class MessageHandler():
                     for client in clients:
                         TCPClientSender(client[0], self.msg, client[1])
                         if debug: print(self.msg['message'])
+            elif self.msg['message'] != 'initial message':
+                response = {
+                    'cmd': 'WRONG_LEADER',
+                    'uuid': None,
+                    'msg': self.my_ip,
+                    'name': 'Server',
+                    'message': 'A new leader has been elected',
+                }
+                TCPClientSender(self.message, response, self.msg['name'])
 
         elif (self.command == 'CLIENT'):
             if self.message != self.my_ip:
@@ -759,4 +768,3 @@ if __name__ == '__main__':
 
     except KeyboardInterrupt:
         sys.exit(0)
-    

@@ -96,15 +96,20 @@ class TCPMessageListener(Thread):
                 }
                 conn.sendall(encode_message(msg))
                 received = decode_message(data)
-                name = received['name']
-                message = received['message']
-                global server_ip
-                server_ip = received['msg']
-                print(name,': ',message)
-                if received['message2']:
-                    print(name, ': ', received['message2'])
+                if received['cmd'] == 'WRONG LEADER':
+                    send_initial_broadcast()
+                    print('Lost connection to server. trying to find new server...')
+                else:
+                    name = received['name']
+                    message = received['message']
+                    global server_ip
+                    server_ip = received['msg']
+                    print(name,': ',message)
+                    if received['message2']:
+                        print(name, ': ', received['message2'])
 
-                if debug: print('TCP was successful. Message: ', decode_message(data))
+                    if debug: print('TCP was successful. Message: ', decode_message(data))
+                
             except:
                 pass
                 #print('Error while receiving messages')      
