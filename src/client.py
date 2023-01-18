@@ -96,7 +96,7 @@ class TCPMessageListener(Thread):
                 }
                 conn.sendall(encode_message(msg))
                 received = decode_message(data)
-                if received['cmd'] == 'WRONG LEADER':
+                if received['cmd'] == 'WRONG_LEADER':
                     send_initial_broadcast()
                     print('Lost connection to server. trying to find new server...')
                 else:
