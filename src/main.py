@@ -307,7 +307,7 @@ def send_initial_broadcast():
 class HeartbeatListener(Thread):
     def __init__(self, hearbeat_port, UUID):
         Thread.__init__(self)
-        self.heartbeat_port = hearbeat_port #59073
+        self.heartbeat_port = hearbeat_port
         self.host = socket.gethostname()
         self.ip_address = get_host_IP()
         self.UUID = UUID
@@ -338,7 +338,6 @@ class HeartbeatListener(Thread):
                     'msg': self.ip_address
                 }
                 conn.sendall(encode_message(msg))
-                #MessageHandler(data) #command: 'HEARTBEAT'
 
             else:
                 print('No data received')
@@ -454,7 +453,7 @@ class HeartbeatSender(Thread):
         except ValueError:
             if debug: print('Failed to remove lost server from list')
 
-        # if lost leader discovered start new voting - only right neighbour can start the vote
+        # if lost leader discovered start new voting - only left neighbour can start the vote
        
 #---------- TCP Unicast ----------
 class TCPUnicastSender(Thread):
